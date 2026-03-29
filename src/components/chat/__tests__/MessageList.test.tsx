@@ -65,7 +65,7 @@ test("MessageList renders messages with parts", () => {
           type: "tool-invocation",
           toolInvocation: {
             toolCallId: "asdf",
-            args: {},
+            args: { command: "create", path: "/App.jsx" },
             toolName: "str_replace_editor",
             state: "result",
             result: "Success",
@@ -78,7 +78,44 @@ test("MessageList renders messages with parts", () => {
   render(<MessageList messages={messages} />);
 
   expect(screen.getByText("Creating your component...")).toBeDefined();
-  expect(screen.getByText("str_replace_editor")).toBeDefined();
+  expect(screen.getByText("Creando App.jsx")).toBeDefined();
+});
+
+test("MessageList renders tool invocations with user-friendly messages", () => {
+  const messages: Message[] = [
+    {
+      id: "1",
+      role: "assistant",
+      content: "",
+      parts: [
+        {
+          type: "tool-invocation",
+          toolInvocation: {
+            toolCallId: "call1",
+            args: { command: "str_replace", path: "/components/Button.tsx" },
+            toolName: "str_replace_editor",
+            state: "result",
+            result: "Success",
+          },
+        },
+        {
+          type: "tool-invocation",
+          toolInvocation: {
+            toolCallId: "call2",
+            args: { command: "delete", path: "/old-file.js" },
+            toolName: "file_manager",
+            state: "result",
+            result: "Success",
+          },
+        },
+      ],
+    },
+  ];
+
+  render(<MessageList messages={messages} />);
+
+  expect(screen.getByText("Editando Button.tsx")).toBeDefined();
+  expect(screen.getByText("Eliminando old-file.js")).toBeDefined();
 });
 
 test("MessageList shows content for assistant message with content", () => {
