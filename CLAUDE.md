@@ -126,6 +126,8 @@ Two main React contexts manage state:
 
 ### Database Schema
 
+**Reference `prisma/schema.prisma` for the authoritative database structure.** Always check this file when working with database operations or understanding data models.
+
 ```prisma
 model User {
   id        String   @id @default(cuid())
@@ -201,6 +203,10 @@ All paths in the virtual FS start with `/`:
 - `/components/Button.jsx`
 - Imports use `@/` alias: `import Button from '@/components/Button'`
 - Import map handles both `/` and `@/` prefixed paths
+
+## Code Style
+
+- **Use comments sparingly**. Only comment complex code. Code should be self-documenting through clear naming and structure.
 
 ## Testing
 
